@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Scissors, Users, Calendar, Shield, Star, Sparkles } from 'lucide-react';
 import topcoutureImage from '../assets/topcouture.jpg'; 
-const formatCFA = (amount) => {
+const formatCFA = (amount:Number) => {
     if (typeof amount !== 'number' || isNaN(amount)) {
         return 'Prix non spécifié'; 
     }

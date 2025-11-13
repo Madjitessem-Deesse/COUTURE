@@ -1,5 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, Couturier } from '../types';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import type { User, Couturier } from '../types';
+import adminImg from '../assets/admin.jpg';
+import marieImg from '../assets/marie.jpg';
+import fatouImg from '../assets/fatou.jpg';
+import brahimImg from '../assets/brahim.jpg';
+import djibrilImg from '../assets/djibril.jpg';
 
 interface AuthContextType {
   user: User | null;
@@ -12,9 +17,23 @@ interface AuthContextType {
   isAdmin: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// --- CORRECTION 1 : Définir la valeur par défaut complète ---
+const defaultAuthContextValue: AuthContextType = {
+  user: null,
+  // Fonctions factices (dummy) qui lèvent une erreur si elles sont appelées
+  // en dehors du AuthProvider, ce qui est la meilleure pratique.
+  login: async () => { throw new Error('AuthContext used outside Provider'); },
+  logout: () => { throw new Error('AuthContext used outside Provider'); },
+  register: async () => { throw new Error('AuthContext used outside Provider'); },
+  registerCouturier: async () => { throw new Error('AuthContext used outside Provider'); },
+  isCouturier: false,
+  isClient: false,
+  isAdmin: false,
+};
 
-// Mock users data
+// --- CORRECTION 2 : Initialiser le contexte SANS `| undefined` ---
+const AuthContext = createContext<AuthContextType>(defaultAuthContextValue);
+
 const mockUsers: (User & { password: string })[] = [
   {
     id: '1',
@@ -22,7 +41,7 @@ const mockUsers: (User & { password: string })[] = [
     email: 'admin@coutureconnect.com',
     password: 'admin123',
     role: 'admin',
-    avatar: 'https://images.pexels.com/photos/3777931/pexels-photo-3777931.jpeg?auto=compress&cs=tinysrgb&w=150',
+    avatar: adminImg, 
     createdAt: '2024-01-01T00:00:00Z',
     isVerified: true
   },
@@ -32,8 +51,8 @@ const mockUsers: (User & { password: string })[] = [
     email: 'marie@example.com',
     password: 'client123',
     role: 'client',
-    avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150',
-    phone: '+33 6 12 34 56 78',
+    avatar: marieImg, 
+    phone: '+235 00 00 00 00',
     address: '123 Rue de la Mode, Paris',
     createdAt: '2024-01-15T00:00:00Z',
     isVerified: true
@@ -44,8 +63,8 @@ const mockUsers: (User & { password: string })[] = [
     email: 'fatou@couture.com',
     password: 'couturier123',
     role: 'couturier',
-    avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=150',
-    phone: '+221 77 123 45 67',
+    avatar: fatouImg, 
+    phone: '+235 00 00 00 00',
     createdAt: '2024-01-10T00:00:00Z',
     isVerified: true,
     businessName: 'Atelier Fatou Couture',
@@ -53,10 +72,7 @@ const mockUsers: (User & { password: string })[] = [
     experience: 8,
     rating: 4.8,
     reviewCount: 156,
-    portfolio: [
-      'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=500',
-      'https://images.pexels.com/photos/7679721/pexels-photo-7679721.jpeg?auto=compress&cs=tinysrgb&w=500'
-    ],
+    portfolio: [brahimImg, djibrilImg], 
     workingHours: {
       monday: { start: '09:00', end: '18:00', isOpen: true },
       tuesday: { start: '09:00', end: '18:00', isOpen: true },
@@ -66,7 +82,6 @@ const mockUsers: (User & { password: string })[] = [
       saturday: { start: '10:00', end: '16:00', isOpen: true },
       sunday: { start: '00:00', end: '00:00', isOpen: false }
     },
-    // CORRECTION: Remplacement des montants Euro par des montants en FCFA (ex: 35 000 - 350 000 FCFA)
     priceRange: { min: 35000, max: 350000 }, 
     location: {
       city: 'Dakar',
@@ -169,7 +184,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  // --- CORRECTION 3 : L'erreur se trouve dans la valeur par défaut factice, 
+  // mais nous gardons la vérification d'erreur de `useContext` pour la robustesse
+  if (context.login === defaultAuthContextValue.login) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

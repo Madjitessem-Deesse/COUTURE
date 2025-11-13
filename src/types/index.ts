@@ -6,9 +6,9 @@ export interface User {
   avatar?: string;
   role: 'client' | 'couturier' | 'admin';
   phone?: string;
-  address?: string; // L'adresse est importante pour la localisation
+  address?: string; 
   createdAt: string;
-  isVerified: boolean; // Statut de vérification
+  isVerified: boolean; 
   subscription?: {
     type: 'basic' | 'premium';
     expiresAt: string;
@@ -21,8 +21,8 @@ export interface Couturier extends User {
   role: 'couturier';
   businessName: string;
   specialties: string[];
-  experience: number; // en années
-  rating: number; // 0.0 à 5.0
+  experience: number; 
+  rating: number;
   reviewCount: number;
   portfolio: string[];
   workingHours: {
@@ -42,7 +42,7 @@ export interface Couturier extends User {
   };
 }
 
-// --- PUBLICATION (FEED) ---
+
 export interface Post {
   id: string;
   couturierId: string;
@@ -52,8 +52,8 @@ export interface Post {
   images: string[];
   category: string;
   tags: string[];
-  price?: number; // Prix suggéré en FCFA
-  likes: string[]; // user IDs who liked
+  price?: number; 
+  likes: string[]; 
   comments: Comment[];
   createdAt: string;
   isPromoted: boolean;
@@ -77,11 +77,11 @@ export interface Appointment {
   couturier: Couturier;
   date: string;
   time: string;
-  duration: number; // en minutes
+  duration: number; 
   service: string;
   description: string;
   status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
-  price: number; // Coût estimé du service en FCFA
+  price: number; 
   createdAt: string;
 }
 
@@ -94,7 +94,7 @@ export interface Order {
   couturier: Couturier;
   appointmentId?: string;
   items: OrderItem[];
-  total: number; // Montant total final en FCFA
+  total: number; 
   status: 'pending_payment' | 'paid' | 'in_progress' | 'ready' | 'delivered' | 'cancelled';
   paymentStatus: 'pending' | 'paid' | 'refunded';
   deliveryDate: string;
@@ -110,7 +110,7 @@ export interface OrderItem {
   id: string;
   name: string;
   description: string;
-  price: number; // Prix unitaire en FCFA
+  price: number; 
   quantity: number;
   specifications?: string;
 }
@@ -122,7 +122,7 @@ export interface Review {
   client: User;
   couturierId: string;
   orderId: string;
-  rating: number; // 1 à 5
+  rating: number; 
   comment: string;
   images?: string[];
   createdAt: string;
@@ -144,7 +144,7 @@ export interface Notification {
 export interface Payment {
   id: string;
   orderId: string;
-  amount: number; // Montant payé en FCFA
+  amount: number; 
   // Méthodes de paiement adaptées au contexte africain
   method: 'card' | 'mobile_money' | 'bank_transfer' | 'cash'; 
   status: 'pending' | 'completed' | 'failed' | 'refunded';
