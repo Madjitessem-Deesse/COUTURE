@@ -6,7 +6,8 @@
     "lib": ["es2020", "dom", "dom.iterable"], 
     "target": "es2020",
     "module": "esnext", 
-
+    "moduleResolution": "bundler",
+    
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",

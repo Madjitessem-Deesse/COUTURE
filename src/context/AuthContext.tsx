@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect} from 'react';
+import type { ReactNode } from 'react';
 import type { User, Couturier } from '../types';
 import adminImg from '../assets/admin.jpg';
 import marieImg from '../assets/marie.jpg';
@@ -17,11 +18,9 @@ interface AuthContextType {
   isAdmin: boolean;
 }
 
-// --- CORRECTION 1 : Définir la valeur par défaut complète ---
 const defaultAuthContextValue: AuthContextType = {
   user: null,
-  // Fonctions factices (dummy) qui lèvent une erreur si elles sont appelées
-  // en dehors du AuthProvider, ce qui est la meilleure pratique.
+
   login: async () => { throw new Error('AuthContext used outside Provider'); },
   logout: () => { throw new Error('AuthContext used outside Provider'); },
   register: async () => { throw new Error('AuthContext used outside Provider'); },
@@ -31,14 +30,13 @@ const defaultAuthContextValue: AuthContextType = {
   isAdmin: false,
 };
 
-// --- CORRECTION 2 : Initialiser le contexte SANS `| undefined` ---
 const AuthContext = createContext<AuthContextType>(defaultAuthContextValue);
 
 const mockUsers: (User & { password: string })[] = [
   {
     id: '1',
     name: 'Admin User',
-    email: 'admin@coutureconnect.com',
+    email: 'admin@gmail.com',
     password: 'admin123',
     role: 'admin',
     avatar: adminImg, 
@@ -48,7 +46,7 @@ const mockUsers: (User & { password: string })[] = [
   {
     id: '2',
     name: 'Marie Dubois',
-    email: 'marie@example.com',
+    email: 'marie@gmail.com',
     password: 'client123',
     role: 'client',
     avatar: marieImg, 
@@ -60,7 +58,7 @@ const mockUsers: (User & { password: string })[] = [
   {
     id: '3',
     name: 'Fatou Diallo',
-    email: 'fatou@couture.com',
+    email: 'fatou@gmail.com',
     password: 'couturier123',
     role: 'couturier',
     avatar: fatouImg, 
@@ -184,8 +182,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  // --- CORRECTION 3 : L'erreur se trouve dans la valeur par défaut factice, 
-  // mais nous gardons la vérification d'erreur de `useContext` pour la robustesse
   if (context.login === defaultAuthContextValue.login) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
