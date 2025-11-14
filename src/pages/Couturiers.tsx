@@ -12,8 +12,10 @@ import {
   Heart,
   Calendar
 } from 'lucide-react';
+import fatouImg from '../assets/fatou.jpg';     
+import brahimImg from '../assets/brahim.jpg'; 
+import djibrilImg from '../assets/djibril.jpg'; 
 
-// --- DEVISE FCFA ---
 const formatCFA = (amount: number) => {
     if (typeof amount !== 'number' || isNaN(amount)) {
         return 'Prix non spécifié'; 
@@ -22,7 +24,7 @@ const formatCFA = (amount: number) => {
     try {
         return amount.toLocaleString('fr-FR', {
             style: 'currency',
-            currency: 'XOF', // Franc CFA Ouest Africain
+            currency: 'XOF', 
             minimumFractionDigits: 0, 
             maximumFractionDigits: 0
         });
@@ -32,22 +34,22 @@ const formatCFA = (amount: number) => {
 };
 
 
-// Mock couturiers data (Prix en FCFA virtuels)
 const mockCouturiers = [
   {
     id: '3',
     name: 'Fatou Diallo',
     businessName: 'Atelier Fatou Couture',
-    avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',
-    coverImage: 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=500',
+  
+    avatar: fatouImg,
+    coverImage: fatouImg,
     specialties: ['Robes traditionnelles', 'Tenues de soirée', 'Costumes sur mesure'],
     experience: 8,
     rating: 4.8,
     reviewCount: 156,
     location: { city: 'Dakar', district: 'Plateau' },
-    priceRange: { min: 35000, max: 300000 }, // FCFA
+    priceRange: { min: 35000, max: 300000 }, 
     followers: 1250,
-    isVerified: true, // Ce couturier est vérifié et sera affiché
+    isVerified: true, 
     subscription: { type: 'premium', isActive: true },
     description: 'Spécialiste des robes traditionnelles et modernes'
   },
@@ -55,8 +57,8 @@ const mockCouturiers = [
     id: '4',
     name: 'Aminata Mbaye',
     businessName: 'Couture Aminata',
-    avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',
-    coverImage: 'https://images.pexels.com/photos/7679721/pexels-photo-7679721.jpeg?auto=compress&cs=tinysrgb&w=500',
+    avatar: djibrilImg,
+    coverImage: djibrilImg,
     specialties: ['Mode contemporaine', 'Accessoires', 'Retouches'],
     experience: 5,
     rating: 4.6,
@@ -64,7 +66,7 @@ const mockCouturiers = [
     location: { city: 'Dakar', district: 'Almadies' },
     priceRange: { min: 20000, max: 150000 }, // FCFA
     followers: 890,
-    isVerified: false, // Ce couturier NE sera PAS affiché
+    isVerified: false, 
     subscription: { type: 'basic', isActive: true },
     description: 'Créatrice de mode contemporaine et accessoires'
   },
@@ -72,16 +74,16 @@ const mockCouturiers = [
     id: '5',
     name: 'Ibrahima Sarr',
     businessName: 'Tailleur Ibrahima',
-    avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',
-    coverImage: 'https://images.pexels.com/photos/7679722/pexels-photo-7679722.jpeg?auto=compress&cs=tinysrgb&w=500',
+    avatar: brahimImg,
+    coverImage: brahimImg,
     specialties: ['Costumes masculins', 'Vêtements traditionnels', 'Uniformes'],
     experience: 12,
     rating: 4.9,
     reviewCount: 203,
     location: { city: 'Dakar', district: 'Medina' },
-    priceRange: { min: 45000, max: 400000 }, // FCFA
+    priceRange: { min: 45000, max: 400000 },
     followers: 1580,
-    isVerified: true, // Ce couturier est vérifié
+    isVerified: true, 
     subscription: { type: 'premium', isActive: true },
     description: 'Maître tailleur spécialisé dans les costumes masculins'
   },
@@ -89,8 +91,8 @@ const mockCouturiers = [
     id: '6',
     name: 'Aissatou Ba',
     businessName: 'Atelier Aissatou',
-    avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',
-    coverImage: 'https://images.pexels.com/photos/7679723/pexels-photo-7679723.jpeg?auto=compress&cs=tinysrgb&w=500',
+    avatar: djibrilImg,
+    coverImage: djibrilImg,
     specialties: ['Robes de mariée', 'Tenues de cérémonie', 'Broderie'],
     experience: 10,
     rating: 4.7,
@@ -98,7 +100,7 @@ const mockCouturiers = [
     location: { city: 'Dakar', district: 'Point E' },
     priceRange: { min: 80000, max: 500000 }, // FCFA
     followers: 2100,
-    isVerified: true, // Ce couturier est vérifié
+    isVerified: true, 
     subscription: { type: 'premium', isActive: true },
     description: 'Spécialiste des robes de mariée et tenues de cérémonie'
   },
@@ -106,8 +108,9 @@ const mockCouturiers = [
     id: '7',
     name: 'Moussa Diop',
     businessName: 'Couture Moderne',
-    avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',
-    coverImage: 'https://images.pexels.com/photos/7679724/pexels-photo-7679724.jpeg?auto=compress&cs=tinysrgb&w=500',
+    // Correction : Avatar et Couverture locaux (Masculin)
+    avatar: brahimImg,
+    coverImage: brahimImg,
     specialties: ['Mode urbaine', 'Streetwear', 'Personnalisation'],
     experience: 6,
     rating: 4.4,
@@ -115,7 +118,7 @@ const mockCouturiers = [
     location: { city: 'Dakar', district: 'Sacré-Coeur' },
     priceRange: { min: 25000, max: 120000 }, // FCFA
     followers: 650,
-    isVerified: false, // Ce couturier NE sera PAS affiché
+    isVerified: false, 
     subscription: { type: 'basic', isActive: true },
     description: 'Créateur de mode urbaine et streetwear'
   },
@@ -123,16 +126,16 @@ const mockCouturiers = [
     id: '8',
     name: 'Khady Ndiaye',
     businessName: 'Khady Couture',
-    avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',
-    coverImage: 'https://images.pexels.com/photos/7679725/pexels-photo-7679725.jpeg?auto=compress&cs=tinysrgb&w=500',
+    avatar: djibrilImg, 
+    coverImage: djibrilImg,
     specialties: ['Vêtements enfants', 'Tenues scolaires', 'Costumes'],
     experience: 7,
     rating: 4.5,
     reviewCount: 98,
     location: { city: 'Dakar', district: 'Liberté' },
-    priceRange: { min: 15000, max: 80000 }, // FCFA
+    priceRange: { min: 15000, max: 80000 }, 
     followers: 780,
-    isVerified: false, // Ce couturier NE sera PAS affiché
+    isVerified: false, 
     subscription: { type: 'basic', isActive: true },
     description: 'Spécialisée dans les vêtements pour enfants'
   }
@@ -160,12 +163,11 @@ export function Couturiers() {
 
   const filteredCouturiers = useMemo(() => {
     let filtered = mockCouturiers.filter(couturier => {
-      // 1. NOUVELLE RÈGLE: Filtrer UNIQUEMENT les couturiers vérifiés.
       if (!couturier.isVerified) {
           return false;
       }
 
-      // 2. Filtres existants
+
       const matchesSearch = !searchQuery || 
         couturier.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         couturier.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -297,7 +299,6 @@ export function Couturiers() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {/* AFFICHAGE DU MONTANT EN FCFA */}
                   Budget maximum: {formatCFA(priceRange[1])}
                 </label>
                 <input
@@ -335,13 +336,13 @@ export function Couturiers() {
                 {/* Cover Image */}
                 <div className="relative h-48 overflow-hidden">
                   <img
+                  
                     src={couturier.coverImage}
                     alt={`Couverture ${couturier.businessName}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                   
-                  {/* Premium Badge (Bleu) */}
                   {couturier.subscription.type === 'premium' && (
                     <div className="absolute top-3 right-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-medium shadow-md">
                       Premium
@@ -356,7 +357,6 @@ export function Couturiers() {
                         alt={couturier.name}
                         className="w-16 h-16 rounded-full border-4 border-white object-cover"
                       />
-                      {/* Badge Vérifié (Bleu) */}
                       {couturier.isVerified && (
                         <div className="absolute -bottom-1 -right-1 bg-blue-500 rounded-full p-1 shadow-md">
                           <CheckCircle className="h-4 w-4 text-white" />
@@ -415,7 +415,6 @@ export function Couturiers() {
                     {couturier.specialties.slice(0, 2).map((specialty, index) => (
                       <span
                         key={index}
-                        // Tags en Bleu clair
                         className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
                       >
                         {specialty}
@@ -432,7 +431,6 @@ export function Couturiers() {
                   <div className="flex space-x-3">
                     <Link
                       to={`/couturier/${couturier.id}`}
-                      // Bouton principal en Bleu
                       className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center font-medium"
                     >
                       Voir le profil
@@ -441,7 +439,6 @@ export function Couturiers() {
                       <Heart className="h-5 w-5 text-gray-600 hover:text-red-500 transition-colors" />
                     </button>
                     <button 
-                      // Bouton secondaire (Calendrier) en Bleu clair
                       className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
                     >
                       <Calendar className="h-5 w-5" />

@@ -18,12 +18,9 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-// Mock couturier data - in real app, this would come from API
-// J'ai ajouté un 'user.id' simulé pour tester la condition d'édition
-// Dans un scénario réel, 'user.id' viendrait de votre AuthContext
-const MOCK_USER_ID_LOGGED_IN = '3'; // Simuler que le couturier est connecté
+const MOCK_USER_ID_LOGGED_IN = '3'; 
 const mockCouturier = {
-  id: '3', // L'ID du propriétaire du profil
+  id: '3', 
   name: 'Fatou Diallo',
   businessName: 'Atelier Fatou Couture',
   avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',

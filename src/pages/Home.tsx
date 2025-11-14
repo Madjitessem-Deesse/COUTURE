@@ -2,7 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Scissors, Users, Calendar, Shield, Star, Sparkles } from 'lucide-react';
 import topcoutureImage from '../assets/topcouture.jpg'; 
-const formatCFA = (amount:number) => {
+import brahimImg from '../assets/brahim.jpg'; 
+import djibrilImg from '../assets/djibril.jpg'; 
+import fatouImg from '../assets/fatou.jpg';     
+
+
+const formatCFA = (amount: number) => {
     if (typeof amount !== 'number' || isNaN(amount)) {
         return 'Prix non spécifié'; 
     }
@@ -145,7 +150,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* Featured Couturiers (Maintenu) */}
+      {/* Featured Couturiers */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -154,17 +159,16 @@ export function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Featured Couturier 1 */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <img
-                src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Création couture"
+                src={fatouImg} 
+                alt="Création couture de Fatou Diallo"
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <img
-                    src="https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=100"
+                    src={fatouImg} 
                     alt="Fatou Diallo"
                     className="w-12 h-12 rounded-full object-cover"
                   />
@@ -178,7 +182,6 @@ export function Home() {
                 </div>
                 <p className="text-gray-600 mb-4">Spécialiste des robes traditionnelles et tenues de soirée</p>
                 <div className="flex items-center justify-between">
-                  {/* Prix en FCFA SANS symbole Euro */}
                   <span className="text-blue-600 font-semibold">
                     À partir de {formatCFA(PRIX_FATOU)}
                   </span>
@@ -192,11 +195,10 @@ export function Home() {
               </div>
             </div>
 
-            {/* Featured Couturier 2 (Maintenu) */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <img
-                src="https://images.pexels.com/photos/7679721/pexels-photo-7679721.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Création couture"
+                src={djibrilImg} 
+                alt="Création couture d'Aminata Mbaye"
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
@@ -227,11 +229,11 @@ export function Home() {
               </div>
             </div>
 
-            {/* Featured Couturier 3 (Maintenu) */}
+
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <img
-                src="https://images.pexels.com/photos/7679722/pexels-photo-7679722.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Création couture"
+                src={brahimImg} 
+                alt="Création couture d'Ibrahima Sarr"
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
@@ -247,7 +249,7 @@ export function Home() {
                     </div>
                   </div>
                 </div>
-                <p className="text-gray-600 mb-4">Maître tailleur, costumes et vêtements masculins</p>
+                <p className="text-gray-600 mb-4">Maître tailleur, costumes et vêtements masculins et en même temps feminin</p>
                 <div className="flex items-center justify-between">
                   <span className="text-blue-600 font-semibold">
                     À partir de {formatCFA(PRIX_IBRAHIMA)}
