@@ -1,4 +1,3 @@
-import React from 'react';
 import { Filter, X } from 'lucide-react';
 
 interface ProductFiltersProps {
@@ -13,12 +12,11 @@ interface ProductFiltersProps {
   onToggle: () => void;
 }
 
-// Fonction utilitaire pour formater le prix en FCFA
 const formatCFA = (amount: number) => {
     try {
         return amount.toLocaleString('fr-FR', {
             style: 'currency',
-            currency: 'XOF', // Franc CFA Ouest Africain
+            currency: 'XOF', 
             minimumFractionDigits: 0, 
             maximumFractionDigits: 0
         });
@@ -27,9 +25,9 @@ const formatCFA = (amount: number) => {
     }
 };
 
-// Plage max pour le slider (ajusté pour FCFA, ex: 0 - 500 000)
+
 const MAX_PRICE_FCFA = 500000;
-const STEP_FCFA = 10000; // Pas de 10 000 F CFA
+const STEP_FCFA = 10000;
 
 export function ProductFilters({
   categories,
@@ -43,7 +41,7 @@ export function ProductFilters({
   onToggle
 }: ProductFiltersProps) {
   
-  // Définit la plage de réinitialisation en FCFA
+
   const handleResetFilters = () => {
     onCategoryChange('');
     onPriceRangeChange([0, MAX_PRICE_FCFA]);
@@ -55,7 +53,6 @@ export function ProductFilters({
       {/* Filter Toggle Button (Mobile) */}
       <button
         onClick={onToggle}
-        // Bouton de toggle : utilise des couleurs neutres avec un accent de survol bleu
         className="lg:hidden flex items-center space-x-2 bg-white border border-gray-300 rounded-lg px-4 py-2 mb-4 hover:border-blue-500 hover:text-blue-600 transition-colors"
       >
         <Filter className="h-4 w-4" />
@@ -83,7 +80,7 @@ export function ProductFilters({
                   value=""
                   checked={selectedCategory === ''}
                   onChange={(e) => onCategoryChange(e.target.value)}
-                  // Accent bleu pour le radio button
+                
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300" 
                 />
                 <span className="ml-2 text-sm text-gray-700">Toutes</span>
@@ -96,7 +93,7 @@ export function ProductFilters({
                     value={category}
                     checked={selectedCategory === category}
                     onChange={(e) => onCategoryChange(e.target.value)}
-                    // Accent bleu pour le radio button
+                
                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                   />
                   <span className="ml-2 text-sm text-gray-700">{category}</span>
@@ -114,11 +111,11 @@ export function ProductFilters({
                 <input
                   type="range"
                   min="0"
-                  max={MAX_PRICE_FCFA.toString()} // Max en FCFA
-                  step={STEP_FCFA.toString()} // Pas en FCFA
+                  max={MAX_PRICE_FCFA.toString()} 
+                  step={STEP_FCFA.toString()} 
                   value={priceRange[0]}
                   onChange={(e) => onPriceRangeChange([Number(e.target.value), priceRange[1]])}
-                  // Curseur avec accent bleu
+               
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg focus:ring-2 focus:ring-blue-500" 
                   style={{ accentColor: '#3B82F6' }}
                 />
@@ -130,11 +127,11 @@ export function ProductFilters({
                 <input
                   type="range"
                   min="0"
-                  max={MAX_PRICE_FCFA.toString()} // Max en FCFA
-                  step={STEP_FCFA.toString()} // Pas en FCFA
+                  max={MAX_PRICE_FCFA.toString()} 
+                  step={STEP_FCFA.toString()} 
                   value={priceRange[1]}
                   onChange={(e) => onPriceRangeChange([priceRange[0], Number(e.target.value)])}
-                  // Curseur avec accent bleu
+                 
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg focus:ring-2 focus:ring-blue-500"
                   style={{ accentColor: '#3B82F6' }}
                 />
@@ -150,7 +147,7 @@ export function ProductFilters({
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
-              // Focus ring bleu
+            
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 transition-colors"
             >
               <option value="name">Nom</option>
@@ -164,7 +161,7 @@ export function ProductFilters({
           {/* Reset Filters */}
           <button
             onClick={handleResetFilters}
-            // Bouton réinitialiser avec un fond neutre et survol bleu
+          
             className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm font-medium border border-transparent hover:border-blue-300"
           >
             Réinitialiser les filtres

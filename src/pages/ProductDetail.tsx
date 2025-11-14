@@ -34,7 +34,6 @@ export function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
-  // NOTE: mockProducts DOIT contenir des objets avec { id, name, category, rating, reviews, price, description, stock, image }
   const product = mockProducts.find(p => p.id === id);
 
   if (!product) {
@@ -45,12 +44,11 @@ export function ProductDetail() {
     addToCart(product, quantity);
   };
 
-  const productImages = [product.image, product.image, product.image]; // Mock multiple images
-
+  const productImages = [product.image, product.image, product.image]; 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Button */}
+        
         <button
           onClick={() => window.history.back()}
           className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 mb-6"
@@ -76,7 +74,6 @@ export function ProductDetail() {
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`aspect-square rounded-lg overflow-hidden border-2 ${
-                      // Bordure BLEUE pour l'image sélectionnée
                       selectedImage === index ? 'border-blue-500 shadow-md' : 'border-gray-200'
                     }`}
                   >
@@ -134,15 +131,13 @@ export function ProductDetail() {
                 <div className="flex items-center space-x-2">
                   <span className="text-gray-600">Stock disponible:</span>
                   <span className={`font-medium ${
-                    // Indicateur de stock en BLEU/VERT
-                    product.stock > 10 ? 'text-blue-600' : 'text-red-500' // Rouge pour faible stock
+                    product.stock > 10 ? 'text-blue-600' : 'text-red-500' 
                   }`}>
                     {product.stock} unités
                   </span>
                 </div>
               </div>
 
-              {/* Quantity and Add to Cart */}
               {user && (
                 <div className="mb-8">
                   <div className="flex items-center space-x-4 mb-4">
@@ -167,14 +162,12 @@ export function ProductDetail() {
                   <div className="flex space-x-3">
                     <button
                       onClick={handleAddToCart}
-                      // Bouton principal en BLEU
                       className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 shadow-md"
                     >
                       <ShoppingCart className="h-5 w-5" />
                       <span>Ajouter au panier</span>
                     </button>
                     <button 
-                      // Bouton secondaire (J'aime)
                       className="p-3 border border-gray-300 rounded-lg hover:bg-blue-50 transition-colors"
                     >
                       <Heart className="h-5 w-5 text-gray-600 hover:text-red-500" />
@@ -194,7 +187,7 @@ export function ProductDetail() {
               {/* Features */}
               <div className="grid grid-cols-2 gap-4 pt-6 border-t border-gray-200">
                 <div className="flex items-center space-x-2">
-                  <Truck className="h-5 w-5 text-blue-600" /> {/* Icône en BLEU */}
+                  <Truck className="h-5 w-5 text-blue-600" /> 
                   <span className="text-sm text-gray-600">Livraison gratuite</span>
                 </div>
                 <div className="flex items-center space-x-2">

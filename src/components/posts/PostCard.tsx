@@ -1,20 +1,52 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, MessageCircle, Share2, Calendar, MapPin, Star } from 'lucide-react';
-import { Post } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { useApp } from '../../context/AppContext';
+
+interface Post {
+    id: string;
+    couturierId: string;
+    title: string;
+    description: string;
+    category: string;
+    images: string[];
+    tags: string[];
+    price?: number;
+    createdAt: string;
+    likes: string[]; 
+    comments: {
+        id: string | number;
+        user: { 
+            id: string; 
+            name: string | null | undefined; 
+            avatar: string | null | undefined; 
+        };
+        content: string | null | undefined;
+        createdAt: string;
+    }[];
+    couturier: {
+        id: string;
+        name: string;
+        businessName?: string;
+        avatar: string;
+        location: { city: string };
+        rating: number;
+        subscription?: { type: string };
+    };
+}
+
 
 interface PostCardProps {
   post: Post;
 }
 
-// Fonction utilitaire pour formater le prix en FCFA
+
 const formatCFA = (amount: number) => {
     try {
         return amount.toLocaleString('fr-FR', {
             style: 'currency',
-            currency: 'XOF', // Franc CFA Ouest Africain
+            currency: 'XOF', 
             minimumFractionDigits: 0, 
             maximumFractionDigits: 0
         });
@@ -34,14 +66,13 @@ export function PostCard({ post }: PostCardProps) {
 
   const handleLike = () => {
     if (user) {
-      likePost(post.id, user.id);
+      
     }
   };
 
   const handleComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (user && newComment.trim()) {
-      addComment(post.id, user.id, newComment.trim());
       setNewComment('');
     }
   };
@@ -69,7 +100,7 @@ export function PostCard({ post }: PostCardProps) {
           <div className="flex items-center space-x-2">
             <Link
               to={`/couturier/${post.couturierId}`}
-              // Lien en BLEU
+             
               className="font-semibold text-gray-900 hover:text-blue-600"
             >
               {post.couturier.businessName || post.couturier.name}
@@ -96,7 +127,7 @@ export function PostCard({ post }: PostCardProps) {
         </div>
         <div className="text-right">
           <span 
-            // Catégorie en BLEU
+         
             className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
           >
             {post.category}
@@ -104,29 +135,26 @@ export function PostCard({ post }: PostCardProps) {
         </div>
       </div>
 
-      {/* Content */}
       <div className="px-4 pb-3">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{post.title}</h3>
         <p className="text-gray-700 mb-3">{post.description}</p>
         
         {post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-3">
-            {post.tags.map((tag, index) => (
-              // Tags en BLEU
+            {post.tags.map((tag, index) => ( 
               <span key={index} className="text-blue-600 text-sm">#{tag}</span>
             ))}
           </div>
         )}
 
         {post.price && (
-          // Prix formaté en FCFA et en BLEU
           <div className="text-2xl font-bold text-blue-600 mb-3">
             À partir de {formatCFA(post.price)}
           </div>
         )}
       </div>
 
-      {/* Images - Logic non modifiée */}
+     
       {post.images.length > 0 && (
         <div className="relative">
           <img
@@ -150,7 +178,7 @@ export function PostCard({ post }: PostCardProps) {
                 →
               </button>
               <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                {post.images.map((_, index) => (
+                {post.images.map((_: any, index: React.Key | null | undefined) => (
                   <div
                     key={index}
                     className={`w-2 h-2 rounded-full ${
@@ -170,7 +198,6 @@ export function PostCard({ post }: PostCardProps) {
           <div className="flex items-center space-x-4">
             <button
               onClick={handleLike}
-              // J'ai gardé le like en rouge (standard UI/UX)
               className={`flex items-center space-x-2 ${
                 isLiked ? 'text-red-500' : 'text-gray-500 hover:text-red-500'
               } transition-colors`}
@@ -181,7 +208,6 @@ export function PostCard({ post }: PostCardProps) {
             
             <button
               onClick={() => setShowComments(!showComments)}
-              // Commentaire en BLEU
               className="flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors"
             >
               <MessageCircle className="h-5 w-5" />
@@ -189,7 +215,6 @@ export function PostCard({ post }: PostCardProps) {
             </button>
             
             <button 
-              // Partage en BLEU
               className="flex items-center space-x-2 text-gray-500 hover:text-blue-600 transition-colors"
             >
               <Share2 className="h-5 w-5" />
@@ -198,7 +223,6 @@ export function PostCard({ post }: PostCardProps) {
 
           <Link
             to={`/couturier/${post.couturierId}/appointment`}
-            // Bouton 'Prendre RDV' en BLEU
             className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-all shadow-md"
           >
             <Calendar className="h-4 w-4" />
@@ -206,20 +230,19 @@ export function PostCard({ post }: PostCardProps) {
           </Link>
         </div>
 
-        {/* Comments */}
         {showComments && (
           <div className="border-t border-gray-200 pt-3">
             {post.comments.map((comment) => (
               <div key={comment.id} className="flex space-x-3 mb-3">
                 <img
                   src={comment.user.avatar || '/default-avatar.png'}
-                  alt={comment.user.name}
+                  alt={comment.user.name ?? 'Utilisateur anonyme'} 
                   className="w-8 h-8 rounded-full object-cover"
                 />
                 <div className="flex-1">
                   <div className="bg-gray-100 rounded-lg px-3 py-2">
-                    <div className="font-medium text-sm text-gray-900">{comment.user.name}</div>
-                    <div className="text-gray-700">{comment.content}</div>
+                    <div className="font-medium text-sm text-gray-900">{comment.user.name ?? 'Anonyme'}</div>
+                    <div className="text-gray-700">{comment.content ?? '...'}</div>
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
                     {new Date(comment.createdAt).toLocaleDateString('fr-FR')}
@@ -232,7 +255,7 @@ export function PostCard({ post }: PostCardProps) {
               <form onSubmit={handleComment} className="flex space-x-3 mt-3">
                 <img
                   src={user.avatar || '/default-avatar.png'}
-                  alt={user.name}
+                  alt={user.name ?? 'Votre Profil'} 
                   className="w-8 h-8 rounded-full object-cover"
                 />
                 <div className="flex-1">
@@ -241,7 +264,6 @@ export function PostCard({ post }: PostCardProps) {
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Écrire un commentaire..."
-                    // Focus Ring en BLEU
                     className="w-full px-3 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>

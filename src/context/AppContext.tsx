@@ -1,5 +1,76 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Post, Appointment, Order, Notification } from '../types';
+import React, { createContext, useContext, useState, } from 'react';
+import type { ReactNode } from 'react';
+import type { Post, Appointment, Order, Notification } from '../pages';
+import djibrilAvatar from '../assets/djibril.jpg'; 
+import brahimAvatar from '../assets/brahim.jpg';
+import dibrilImg from '../assets/dibril.jpg';
+import brahimImg from '../assets/brahim.jpg';
+
+interface UserMock {
+  id: string;
+  name: string | null | undefined;
+  email: string;
+  role: 'client' | 'couturier';
+  avatar?: string | null | undefined;
+  createdAt: string;
+  isVerified: boolean;
+}
+
+interface CouturierMock extends UserMock {
+  businessName?: string;
+  specialties: string[];
+  experience: number;
+  rating: number;
+  reviewCount: number;
+  portfolio: any[];
+  workingHours: {};
+  priceRange: { min: number; max: number };
+  location: { city: string; district: string };
+  subscription?: { type: string; expiresAt: string; isActive: boolean };
+}
+
+interface CommentMock {
+  id: string;
+  userId: string;
+  user: UserMock;
+  content: string | null | undefined;
+  createdAt: string;
+  likes: string[];
+}
+
+interface Post {
+    id: string;
+    couturierId: string;
+    couturier: CouturierMock;
+    title: string;
+    description: string;
+    images: string[];
+    category: string;
+    tags: string[];
+    price: number;
+    likes: string[];
+    comments: CommentMock[];
+    createdAt: string;
+    isPromoted: boolean;
+}
+
+interface Appointment {
+  id: string;
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  createdAt: string;
+}
+
+interface Order {
+  id: string;
+  status: 'pending' | 'shipped' | 'delivered' | 'cancelled';
+  createdAt: string;
+}
+
+interface Notification {
+  id: string;
+  isRead: boolean;
+}
+
 
 interface AppContextType {
   posts: Post[];
@@ -16,47 +87,42 @@ interface AppContextType {
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
-
-// CORRECTION FCFA : Les prix simulés doivent être en Franc CFA (XOF)
-// Conversions approximatives (Ex: 50€ -> 35000 XOF, 150€ -> 100000 XOF, 500€ -> 350000 XOF)
 const PRIX_MIN_FCFA = 35000;
 const PRIX_MAX_FCFA = 350000;
 const PRIX_POST_FCFA = 100000;
 
-// Mock data
+
 const mockPosts: Post[] = [
   {
     id: '1',
     couturierId: '3',
     couturier: {
       id: '3',
-      name: 'Fatou Diallo',
-      email: 'fatou@couture.com',
+      name: 'djibril brahim',
+      email: 'djibril@couture.com',
       role: 'couturier',
-      avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=150',
+      avatar: djibrilAvatar,
       createdAt: '2024-01-10T00:00:00Z',
       isVerified: true,
-      businessName: 'Atelier Fatou Couture',
+      businessName: 'Atelier bouba Couture',
       specialties: ['Robes traditionnelles', 'Tenues de soirée'],
       experience: 8,
       rating: 4.8,
       reviewCount: 156,
       portfolio: [],
       workingHours: {},
-      // PRIX EN FCFA
       priceRange: { min: PRIX_MIN_FCFA, max: PRIX_MAX_FCFA }, 
-      location: { city: 'Dakar', district: 'Plateau' },
+      location: { city: 'tchad', district: 'Plateau' },
       subscription: { type: 'premium', expiresAt: '2024-12-31T23:59:59Z', isActive: true }
-    },
+    } as CouturierMock, 
     title: 'Nouvelle collection de robes traditionnelles',
     description: 'Découvrez ma nouvelle collection inspirée des motifs traditionnels sénégalais. Chaque pièce est unique et confectionnée avec des tissus de qualité premium.',
     images: [
-      'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=500',
-      'https://images.pexels.com/photos/7679721/pexels-photo-7679721.jpeg?auto=compress&cs=tinysrgb&w=500'
+      dibrilImg,
+      brahimImg,
     ],
     category: 'Robes traditionnelles',
     tags: ['wax', 'traditionnel', 'élégant'],
-    // PRIX EN FCFA
     price: PRIX_POST_FCFA, 
     likes: ['2'],
     comments: [
@@ -68,10 +134,10 @@ const mockPosts: Post[] = [
           name: 'Marie Dubois',
           email: 'marie@example.com',
           role: 'client',
-          avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150',
+          avatar: brahimAvatar,
           createdAt: '2024-01-15T00:00:00Z',
           isVerified: true
-        },
+        } as UserMock, 
         content: 'Magnifique travail ! J\'aimerais prendre rendez-vous.',
         createdAt: '2024-01-20T10:30:00Z',
         likes: []
@@ -87,6 +153,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  
 
   const likePost = (postId: string, userId: string) => {
     setPosts(prevPosts =>
@@ -103,17 +170,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const addComment = (postId: string, userId: string, content: string) => {
-    // This would normally fetch user data from API
-    const mockUser = {
+    const mockUser: UserMock = {
       id: userId,
       name: 'User',
       email: 'user@example.com',
-      role: 'client' as const,
+      role: 'client',
       createdAt: new Date().toISOString(),
-      isVerified: true
+      isVerified: true,
+      avatar: djibrilAvatar 
     };
 
-    const newComment = {
+    const newComment: CommentMock = {
       id: Date.now().toString(),
       userId,
       user: mockUser,
@@ -137,7 +204,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       ...appointmentData,
       id: Date.now().toString(),
       createdAt: new Date().toISOString()
-    };
+    } as Appointment;
     setAppointments(prev => [...prev, newAppointment]);
   };
 
@@ -154,7 +221,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       ...orderData,
       id: Date.now().toString(),
       createdAt: new Date().toISOString()
-    };
+    } as Order; 
     setOrders(prev => [...prev, newOrder]);
   };
 

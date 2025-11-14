@@ -4,10 +4,7 @@ import { useCart } from '../context/CarContext';
 import { useAuth } from '../context/AuthContext';
 
 
-// IMPORTANT : Cette fonction formatCFA sera déplacée dans un fichier utilitaire
-// lors de la prochaine étape de nettoyage du code.
-const formatCFA = (amount: number) => { // Type 'number' corrigé ici
-    // Vérification ajoutée au cas où 'amount' n'est pas un nombre
+const formatCFA = (amount: number) => {
     if (typeof amount !== 'number' || isNaN(amount)) {
       return 'Prix non spécifié'; 
     }
@@ -20,13 +17,11 @@ const formatCFA = (amount: number) => { // Type 'number' corrigé ici
 };
 
 export function Cart() {
-  // Déstructuration des fonctions du contexte de panier
   const { items, updateQuantity, removeFromCart, total, clearCart } = useCart();
   const { user } = useAuth();
-  
-  // Calculs avec Francs CFA
+
   const subTotal = total;
-  const tvaRate = 0.18; // Taux de TVA ajusté (typiquement autour de 18% en Afrique de l'Ouest)
+  const tvaRate = 0.18; 
   const tvaAmount = subTotal * tvaRate;
   const grandTotal = subTotal + tvaAmount;
 
@@ -92,7 +87,6 @@ export function Cart() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200">
               {items.map((item) => (
-                // Clé unique combinant l'ID du produit et la taille
                 <div key={`${item.product.id}-${item.size}`} className="p-6 border-b border-gray-200 last:border-b-0">
                   <div className="flex items-center space-x-4">
                     <img
@@ -108,7 +102,7 @@ export function Cart() {
                         {item.product.name}
                       </Link>
                       <p className="text-gray-600 text-sm mt-1">{item.product.category}</p>
-                      {/* Affichage de la taille de l'article */}
+                     
                       <p className="text-gray-600 text-sm mt-1">Taille: {item.size}</p> 
 
                       <div className="flex items-center justify-between mt-3">
@@ -116,10 +110,10 @@ export function Cart() {
                           {formatCFA(item.product.price * item.quantity)}
                         </span>
                         <div className="flex items-center space-x-3">
-                          {/* Quantity Controls */}
+                          
                           <div className="flex items-center border border-gray-300 rounded-lg">
                             <button
-                              // APPEL CORRIGÉ : Inclut item.size
+                             
                               onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.size)}
                               className="p-1 hover:bg-gray-100 transition-colors"
                             >
@@ -129,16 +123,15 @@ export function Cart() {
                               {item.quantity}
                             </span>
                             <button
-                              // APPEL CORRIGÉ : Inclut item.size
+                              
                               onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.size)}
                               className="p-1 hover:bg-gray-100 transition-colors"
                             >
                               <Plus className="h-4 w-4" />
                             </button>
                           </div>
-                          {/* Remove Button */}
+                          
                           <button
-                            // APPEL CORRIGÉ : Inclut item.size
                             onClick={() => removeFromCart(item.product.id, item.size)}
                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           >

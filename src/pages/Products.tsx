@@ -49,9 +49,7 @@ export function Products() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
           <div className="lg:col-span-1">
-            {/* NOTE : ProductFilters DOIT être mis à jour pour utiliser la couleur bleue et la devise FCFA */}
             <ProductFilters
               categories={categories}
               selectedCategory={selectedCategory}
@@ -71,13 +69,10 @@ export function Products() {
               <p className="text-gray-600 font-medium">
                 {filteredAndSortedProducts.length} produit(s) trouvé(s)
               </p>
-              
-              {/* Sort dropdown for mobile */}
               <div className="lg:hidden">
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  // Le bleu sera géré par l'OS ou le style global du formulaire, mais nous assurons la neutralité ici.
                   className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500" 
                 >
                   <option value="name">Nom</option>
@@ -95,7 +90,6 @@ export function Products() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {/* NOTE : ProductCard DOIT être mis à jour pour utiliser la couleur bleue et la devise FCFA */}
                 {filteredAndSortedProducts.map(product => (
                   <ProductCard key={product.id} product={product} />
                 ))}

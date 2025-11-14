@@ -17,20 +17,34 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import djibrilImg from '../assets/djibril.jpg'; 
+import dibrilImg from '../assets/dibril.jpg';
+import portfolio1 from '../assets/portfolio_1.jpg';
+import portfolio2 from '../assets/portfolio_2.jpg';
+import portfolio3 from '../assets/portfolio_3.jpg';
+import portfolio4 from '../assets/portfolio_4.jpg';
+import portfolio5 from '../assets/portfolio_5.jpg';
+import portfolio6 from '../assets/portfolio_6.jpg';
+import postImage1 from '../assets/post_1.jpg';
+import postImage2 from '../assets/post_2.jpg';
+
+
 
 const MOCK_USER_ID_LOGGED_IN = '3'; 
+
 const mockCouturier = {
   id: '3', 
-  name: 'Fatou Diallo',
-  businessName: 'Atelier Fatou Couture',
-  avatar: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=300',
-  coverImage: 'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  name: 'djibril brahim',
+  businessName: 'Atelier Douba Couture',
+  avatar: djibrilImg, 
+  coverImage: dibrilImg, 
+  
   specialties: ['Robes traditionnelles', 'Tenues de soirée', 'Costumes sur mesure'],
   experience: 8,
   rating: 4.8,
   reviewCount: 156,
-  location: { city: 'Dakar', district: 'Plateau' },
-  phone: '+221 77 123 45 67',
+  location: { city: 'tchad', district: 'Plateau' },
+  phone: '+235 00 00 00 00',
   email: 'fatou@couture.com',
   description: 'Passionnée de couture depuis plus de 8 ans, je crée des pièces uniques qui allient tradition et modernité. Mon atelier situé au Plateau vous accueille pour donner vie à vos projets les plus ambitieux.',
   workingHours: {
@@ -43,19 +57,21 @@ const mockCouturier = {
     sunday: { start: '00:00', end: '00:00', isOpen: false }
   },
   priceRange: { min: 50, max: 500 },
+  
+  // Portfolio mis à jour avec les imports locaux
   portfolio: [
-    'https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=500',
-    'https://images.pexels.com/photos/7679721/pexels-photo-7679721.jpeg?auto=compress&cs=tinysrgb&w=500',
-    'https://images.pexels.com/photos/7679722/pexels-photo-7679722.jpeg?auto=compress&cs=tinysrgb&w=500',
-    'https://images.pexels.com/photos/7679723/pexels-photo-7679723.jpeg?auto=compress&cs=tinysrgb&w=500',
-    'https://images.pexels.com/photos/7679724/pexels-photo-7679724.jpeg?auto=compress&cs=tinysrgb&w=500',
-    'https://images.pexels.com/photos/7679725/pexels-photo-7679725.jpeg?auto=compress&cs=tinysrgb&w=500'
+    portfolio1,
+    portfolio2,
+    portfolio3,
+    portfolio4,
+    portfolio5,
+    portfolio6
   ],
   posts: [
     {
       id: '1',
       content: 'Nouvelle collection de robes traditionnelles disponible ! Chaque pièce raconte une histoire unique.',
-      images: ['https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=500'],
+      images: [postImage1], 
       likes: 45,
       comments: 12,
       createdAt: '2024-01-20T10:30:00Z'
@@ -63,7 +79,7 @@ const mockCouturier = {
     {
       id: '2',
       content: 'Merci à ma cliente Marie pour sa confiance ! Une robe de soirée sur mesure qui lui va à merveille ✨',
-      images: ['https://images.pexels.com/photos/7679721/pexels-photo-7679721.jpeg?auto=compress&cs=tinysrgb&w=500'],
+      images: [postImage2], 
       likes: 67,
       comments: 8,
       createdAt: '2024-01-18T15:45:00Z'
@@ -98,6 +114,17 @@ export function CouturierProfile() {
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
   };
+
+  const DayOfWeek = ({ day, hours }: { day: string, hours: { start: string, end: string, isOpen: boolean } }) => (
+    <div className="flex justify-between items-center text-sm">
+      <span className="font-medium text-gray-700">{day}</span>
+      {hours.isOpen ? (
+        <span className="text-gray-600">{hours.start} - {hours.end}</span>
+      ) : (
+        <span className="text-red-500 font-medium">Fermé</span>
+      )}
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -343,6 +370,19 @@ export function CouturierProfile() {
                   </div>
 
                   <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Horaires</h3>
+                    <div className="space-y-1">
+                      <DayOfWeek day="Lundi" hours={couturier.workingHours.monday} />
+                      <DayOfWeek day="Mardi" hours={couturier.workingHours.tuesday} />
+                      <DayOfWeek day="Mercredi" hours={couturier.workingHours.wednesday} />
+                      <DayOfWeek day="Jeudi" hours={couturier.workingHours.thursday} />
+                      <DayOfWeek day="Vendredi" hours={couturier.workingHours.friday} />
+                      <DayOfWeek day="Samedi" hours={couturier.workingHours.saturday} />
+                      <DayOfWeek day="Dimanche" hours={couturier.workingHours.sunday} />
+                    </div>
+                  </div>
+
+                  <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">Tarifs</h3>
                     <p className="text-gray-700">
                       De {couturier.priceRange.min}€ à {couturier.priceRange.max}€
@@ -365,7 +405,7 @@ export function CouturierProfile() {
                   {couturier.portfolio.map((image, index) => (
                     <div key={index} className="aspect-square relative rounded-xl overflow-hidden">
                       <img
-                        src={image}
+                        src={image} 
                         alt={`Portfolio ${index + 1}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
@@ -379,7 +419,12 @@ export function CouturierProfile() {
                 </div>
               </div>
             )}
-            {/* ... (Autres onglets comme 'reviews') */}
+            {activeTab === 'reviews' && (
+                 <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                     <h2 className="text-2xl font-bold text-gray-900 mb-6">Avis Clients</h2>
+                     <p className="text-gray-700">Contenu pour la section Avis (à implémenter).</p>
+                 </div>
+            )}
           </div>
 
           {/* Sidebar */}
@@ -402,6 +447,20 @@ export function CouturierProfile() {
                     <p className="text-sm text-gray-600">{couturier.experience} années</p>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Horaires Détaillés */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Horaires d'ouverture</h3>
+              <div className="space-y-2">
+                <DayOfWeek day="Lundi" hours={couturier.workingHours.monday} />
+                <DayOfWeek day="Mardi" hours={couturier.workingHours.tuesday} />
+                <DayOfWeek day="Mercredi" hours={couturier.workingHours.wednesday} />
+                <DayOfWeek day="Jeudi" hours={couturier.workingHours.thursday} />
+                <DayOfWeek day="Vendredi" hours={couturier.workingHours.friday} />
+                <DayOfWeek day="Samedi" hours={couturier.workingHours.saturday} />
+                <DayOfWeek day="Dimanche" hours={couturier.workingHours.sunday} />
               </div>
             </div>
 
@@ -430,3 +489,14 @@ export function CouturierProfile() {
     </div>
   );
 }
+
+const DayOfWeek = ({ day, hours }: { day: string, hours: { start: string, end: string, isOpen: boolean } }) => (
+  <div className="flex justify-between items-center text-sm">
+    <span className="font-medium text-gray-700">{day}</span>
+    {hours.isOpen ? (
+      <span className="text-gray-600">{hours.start} - {hours.end}</span>
+    ) : (
+      <span className="text-red-500 font-medium">Fermé</span>
+    )}
+  </div>
+);
