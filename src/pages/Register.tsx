@@ -49,7 +49,8 @@ export function Register() {
         role: 'client',
         phone: formData.phone,
         address: formData.address,
-        password: formData.password
+        password: formData.password,
+        avatar: null
       });
 
       if (success) {

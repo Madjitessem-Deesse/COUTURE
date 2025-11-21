@@ -31,7 +31,6 @@ export function Feed() {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-12">
-            {/* Icône en BLEU */}
             <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
               <Heart className="h-10 w-10 text-white" />
             </div>
@@ -43,7 +42,7 @@ export function Feed() {
               et connectez-vous avec une communauté passionnée de couture.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* Bouton S'inscrire en BLEU */}
+         
               <Link
                 to="/register"
                 className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-all font-medium"
@@ -63,7 +62,7 @@ export function Feed() {
     );
   }
 
-  // --- FIL D'ACTUALITÉ CONNECTÉ ---
+ 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -170,20 +169,17 @@ export function Feed() {
             </div>
             ) : (
             filteredPosts.map(post => {
-              // Normalize comments/users to satisfy the expected Post shape
               const normalizedComments = (post.comments || []).map((comment: any) => ({
                 id: comment.id,
                 user: {
                   id: comment.user?.id ?? '',
                   name: comment.user?.name ?? 'Anonyme',
-                  // ensure avatar is a string (PostCard expects string)
                   avatar: comment.user?.avatar ?? '',
                 },
                 content: comment.content ?? '',
                 createdAt: comment.createdAt ?? new Date().toISOString(),
               }));
 
-              // Build an object that matches PostCard's expected shape (no nullable avatars)
               const normalizedPost: any = {
                 id: String(post.id),
                 couturierId: post.couturierId ?? (post.couturier && post.couturier.id) ?? '',
@@ -200,14 +196,12 @@ export function Feed() {
                   id: post.couturier?.id ?? '',
                   name: post.couturier?.name ?? '',
                   businessName: post.couturier?.businessName,
-                  // ensure avatar is a string to satisfy PostCard's type
                   avatar: post.couturier?.avatar ?? '',
                   location: { city: post.couturier?.location?.city ?? '' },
                   rating: post.couturier?.rating ?? 0,
                   subscription: post.couturier?.subscription,
                 },
-                // include any extra fields so UI that expects them still works
-                ...(post as any),
+                 ...(post as any),
               };
 
               return <PostCard key={String(post.id)} post={normalizedPost} />;

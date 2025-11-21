@@ -384,7 +384,7 @@ export function Couturiers() {
                   {/* Stats */}
                   <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
                     <div className="flex items-center space-x-1">
-                      <Star className="h-4 w-4 text-blue-400 fill-current" /> {/* Étoiles en Bleu */}
+                      <Star className="h-4 w-4 text-blue-400 fill-current" /> 
                       <span>{couturier.rating}</span>
                       <span>({couturier.reviewCount})</span>
                     </div>

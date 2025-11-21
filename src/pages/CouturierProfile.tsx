@@ -127,8 +127,7 @@ export function CouturierProfile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Cover Photo - Changement de couleur au BLEU */}
-      <div className="relative h-80 bg-gradient-to-r from-blue-700 to-blue-900">
+       <div className="relative h-80 bg-gradient-to-r from-blue-700 to-blue-900">
         <img
           src={couturier.coverImage}
           alt="Cover"
