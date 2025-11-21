@@ -21,10 +21,10 @@ const mockFavoriteCouturiers = [
   },
   {
     id: '5',
-    name: 'Ibrahim',
-    businessName: 'Tailleur brahima',
+    name: 'Sadou bouhari ousmane',
+    businessName: ' ousmane',
     avatar:brahimImg,
-    specialties: ['Costumes masculins', 'Vêtements traditionnels'],
+    specialties: ['Costumes masculins', 'Vêtements boubou'],
     experience: 12,
     rating: 4.9,
     reviewCount: 203,

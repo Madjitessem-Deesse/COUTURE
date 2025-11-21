@@ -37,8 +37,8 @@ const formatCFA = (amount: number) => {
 const mockCouturiers = [
   {
     id: '3',
-    name: 'Fatou Diallo',
-    businessName: 'Atelier Fatou Couture',
+    name: ' Marie némercie',
+    businessName: 'Atelier marie Couture',
   
     avatar: fatouImg,
     coverImage: fatouImg,
@@ -46,7 +46,7 @@ const mockCouturiers = [
     experience: 8,
     rating: 4.8,
     reviewCount: 156,
-    location: { city: 'Dakar', district: 'Plateau' },
+    location: { city: 'tchad', district: 'Plateau' },
     priceRange: { min: 35000, max: 300000 }, 
     followers: 1250,
     isVerified: true, 
@@ -55,15 +55,15 @@ const mockCouturiers = [
   },
   {
     id: '4',
-    name: 'Aminata Mbaye',
-    businessName: 'Couture Aminata',
+    name: 'Djibril Abdoullah',
+    businessName: 'Couture djibril',
     avatar: djibrilImg,
     coverImage: djibrilImg,
     specialties: ['Mode contemporaine', 'Accessoires', 'Retouches'],
     experience: 5,
     rating: 4.6,
     reviewCount: 89,
-    location: { city: 'Dakar', district: 'Almadies' },
+    location: { city: 'tchad', district: 'Almadies' },
     priceRange: { min: 20000, max: 150000 }, // FCFA
     followers: 890,
     isVerified: false, 
@@ -80,24 +80,24 @@ const mockCouturiers = [
     experience: 12,
     rating: 4.9,
     reviewCount: 203,
-    location: { city: 'Dakar', district: 'Medina' },
+    location: { city: 'tchad', district: 'Medina' },
     priceRange: { min: 45000, max: 400000 },
     followers: 1580,
     isVerified: true, 
     subscription: { type: 'premium', isActive: true },
-    description: 'Maître tailleur spécialisé dans les costumes masculins'
+    description: 'Maître tailleur spécialisé dans les costumes masculins grand boubou rt prof de roderie'
   },
   {
     id: '6',
-    name: 'Aissatou Ba',
-    businessName: 'Atelier Aissatou',
+    name: 'Abdoullah djibril',
+    businessName: 'Abdoullah djibril',
     avatar: djibrilImg,
     coverImage: djibrilImg,
     specialties: ['Robes de mariée', 'Tenues de cérémonie', 'Broderie'],
     experience: 10,
     rating: 4.7,
     reviewCount: 134,
-    location: { city: 'Dakar', district: 'Point E' },
+    location: { city: 'tchad', district: 'Point E' },
     priceRange: { min: 80000, max: 500000 }, // FCFA
     followers: 2100,
     isVerified: true, 
@@ -106,9 +106,8 @@ const mockCouturiers = [
   },
   {
     id: '7',
-    name: 'Moussa Diop',
+    name: 'Sadou bouhari ousmane',
     businessName: 'Couture Moderne',
-    // Correction : Avatar et Couverture locaux (Masculin)
     avatar: brahimImg,
     coverImage: brahimImg,
     specialties: ['Mode urbaine', 'Streetwear', 'Personnalisation'],
@@ -120,7 +119,7 @@ const mockCouturiers = [
     followers: 650,
     isVerified: false, 
     subscription: { type: 'basic', isActive: true },
-    description: 'Créateur de mode urbaine et streetwear'
+    description: 'Créateur de mode urbaine et kaptanie boubou'
   },
   {
     id: '8',

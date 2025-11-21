@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Users, Scissors, TrendingUp, DollarSign, ShoppingBag, Calendar, AlertCircle, Eye, CreditCard as Edit, Trash2, Plus, Search, Filter, BarChart3, PieChart, Activity } from 'lucide-react';
 
-// Mock data for admin dashboard
+
 const mockStats = {
   totalUsers: 1250,
   totalCouturiers: 89,

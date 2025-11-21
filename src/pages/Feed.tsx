@@ -4,6 +4,8 @@ import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { Plus, Filter, TrendingUp, Clock, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import type { Post } from '../types';
+
 
 export function Feed() {
   const { posts } = useApp();
@@ -15,7 +17,6 @@ export function Feed() {
       case 'trending':
         return post.likes.length > 0;
       case 'recent':
-        // Filtre : posts créés au cours des dernières 24 heures
         return new Date(post.createdAt) > new Date(Date.now() - 24 * 60 * 60 * 1000);
       case 'liked':
         return user ? post.likes.includes(user.id) : false;
@@ -24,7 +25,7 @@ export function Feed() {
     }
   });
 
-  // --- ÉCRAN D'ACCUEIL LORSQU'ON N'EST PAS CONNECTÉ ---
+
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -107,7 +108,7 @@ export function Feed() {
               onClick={() => setFilter('trending')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
                 filter === 'trending'
-                  ? 'bg-blue-100 text-blue-700 font-semibold' // Bleu actif
+                  ? 'bg-blue-100 text-blue-700 font-semibold' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
@@ -120,7 +121,7 @@ export function Feed() {
               onClick={() => setFilter('recent')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
                 filter === 'recent'
-                  ? 'bg-blue-100 text-blue-700 font-semibold' // Bleu actif
+                  ? 'bg-blue-100 text-blue-700 font-semibold' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
@@ -128,12 +129,12 @@ export function Feed() {
               <span>Récent</span>
             </button>
             
-            {/* Bouton Aimés - Bleu actif */}
+           
             <button
               onClick={() => setFilter('liked')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
                 filter === 'liked'
-                  ? 'bg-blue-100 text-blue-700 font-semibold' // Bleu actif
+                  ? 'bg-blue-100 text-blue-700 font-semibold' 
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
@@ -145,35 +146,73 @@ export function Feed() {
 
         {/* Posts */}
         <div className="space-y-8">
-          {filteredPosts.length === 0 ? (
+            {filteredPosts.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="h-8 w-8 text-gray-400" />
+              <Heart className="h-8 w-8 text-gray-400" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucune publication trouvée</h3>
               <p className="text-gray-600 mb-6">
-                {filter === 'all' 
-                  ? 'Soyez le premier à publier dans cette communauté !'
-                  : 'Essayez de changer les filtres pour voir plus de contenu.'
-                }
+              {filter === 'all' 
+                ? 'Soyez le premier à publier dans cette communauté !'
+                : 'Essayez de changer les filtres pour voir plus de contenu.'
+              }
               </p>
               {isCouturier && (
-                <Link
-                  to="/create-post"
-                  // Bouton Publier en BLEU
-                  className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-all"
-                >
-                  <Plus className="h-5 w-5" />
-                  <span>Créer une publication</span>
-                </Link>
+              <Link
+                to="/create-post"
+                className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-all"
+              >
+                <Plus className="h-5 w-5" />
+                <span>Créer une publication</span>
+              </Link>
               )}
             </div>
-          ) : (
-            // Note: PostCard doit également être stylisé en bleu si ses couleurs internes sont en violet/rose
-            filteredPosts.map(post => (
-              <PostCard key={post.id} post={post} />
-            ))
-          )}
+            ) : (
+            filteredPosts.map(post => {
+              // Normalize comments/users to satisfy the expected Post shape
+              const normalizedComments = (post.comments || []).map((comment: any) => ({
+                id: comment.id,
+                user: {
+                  id: comment.user?.id ?? '',
+                  name: comment.user?.name ?? 'Anonyme',
+                  // ensure avatar is a string (PostCard expects string)
+                  avatar: comment.user?.avatar ?? '',
+                },
+                content: comment.content ?? '',
+                createdAt: comment.createdAt ?? new Date().toISOString(),
+              }));
+
+              // Build an object that matches PostCard's expected shape (no nullable avatars)
+              const normalizedPost: any = {
+                id: String(post.id),
+                couturierId: post.couturierId ?? (post.couturier && post.couturier.id) ?? '',
+                title: (post as any).title ?? (post as any).name ?? '',
+                description: (post as any).description ?? (post as any).content ?? '',
+                category: (post as any).category ?? '',
+                images: (post as any).images ?? [],
+                tags: (post as any).tags ?? [],
+                price: (post as any).price,
+                createdAt: post.createdAt ?? new Date().toISOString(),
+                likes: (post as any).likes ?? [],
+                comments: normalizedComments,
+                couturier: {
+                  id: post.couturier?.id ?? '',
+                  name: post.couturier?.name ?? '',
+                  businessName: post.couturier?.businessName,
+                  // ensure avatar is a string to satisfy PostCard's type
+                  avatar: post.couturier?.avatar ?? '',
+                  location: { city: post.couturier?.location?.city ?? '' },
+                  rating: post.couturier?.rating ?? 0,
+                  subscription: post.couturier?.subscription,
+                },
+                // include any extra fields so UI that expects them still works
+                ...(post as any),
+              };
+
+              return <PostCard key={String(post.id)} post={normalizedPost} />;
+            })
+            )}
         </div>
       </div>
     </div>

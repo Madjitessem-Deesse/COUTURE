@@ -34,18 +34,18 @@ const MOCK_USER_ID_LOGGED_IN = '3';
 
 const mockCouturier = {
   id: '3', 
-  name: 'djibril brahim',
+  name: 'Djibril Abdoullah',
   businessName: 'Atelier Douba Couture',
   avatar: djibrilImg, 
   coverImage: dibrilImg, 
   
-  specialties: ['Robes traditionnelles', 'Tenues de soirée', 'Costumes sur mesure'],
+  specialties: ['Robes traditionnelles', 'Tenues de soirée', 'Costumes sur mesure boubou pour femme et homme ainsi que prof de broderie'],
   experience: 8,
   rating: 4.8,
   reviewCount: 156,
   location: { city: 'tchad', district: 'Plateau' },
   phone: '+235 00 00 00 00',
-  email: 'fatou@couture.com',
+  email: 'djibril@couture.com',
   description: 'Passionnée de couture depuis plus de 8 ans, je crée des pièces uniques qui allient tradition et modernité. Mon atelier situé au Plateau vous accueille pour donner vie à vos projets les plus ambitieux.',
   workingHours: {
     monday: { start: '09:00', end: '18:00', isOpen: true },
@@ -97,18 +97,17 @@ export function CouturierProfile() {
   const [activeTab, setActiveTab] = useState('posts');
   const [isFollowing, setIsFollowing] = useState(false);
 
-  // Utilisez l'ID de l'utilisateur mocké pour la démonstration
+
   const currentUserId = user ? user.id : MOCK_USER_ID_LOGGED_IN; 
-  // Dans votre application, utilisez simplement 'user ? user.id : null'
+
   
-  // In real app, fetch couturier data based on id
+
   const couturier = mockCouturier;
 
   if (!couturier) {
     return <Navigate to="/couturiers" replace />;
   }
 
-  // Logique pour vérifier si l'utilisateur connecté est le propriétaire du profil
   const isOwner = currentUserId === couturier.id;
 
   const handleFollow = () => {
